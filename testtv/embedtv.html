@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="canonical" href="https://www.ntd.com/embedtv">
+  <title>NTD TV Live</title>
+  <meta name="description" content="" />
+  <link rel="stylesheet" href="https://vod.brightchat.com/static/assets/css/vplayer.css?ver=15.3" type="text/css">
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+      border: 0px;
+    }
+
+    .video_box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .video_box .player-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .video_box .player-container #ymk_player {
+      height: 100%;
+      width: 100%;
+    }
+
+    .video-js .vjs-seek-to-live-control {
+      height: 38px !important;
+    }
+
+    .video-js .vjs-audio-button {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="video_box">
+    <div class="player-container" id="ymk_player_container"></div>
+  </div>
+  <script type="text/javascript" src="https://vod.brightchat.com/static/assets/js/epochplayer7.js?ver=12"></script>
+  <script type="text/javascript">
+    (function () {
+      var ymk_id = "a9c5afaa-3ec4-4f3f-9835-b192abca857b";
+      var ymk_player_id = "player-a9c5afaa-3ec4-4f3f-9835-b192abca857b";
+      var ymk_m3u8 = 'https://amg17596-amg17596c1-ntdtv-worldwide-3276.playouts.now.amagi.tv/playlist/amg17596-newtangdynastytelevision-ntdtv-ntdtvworldwide/playlist.m3u8?app_bundle=465421&app_name=NTDTV&app_store_url=https://www.ntd.com/live/ntd-tv&us_privacy=1YNN&did=5b405ef6-6d1a-c8e9-f859-c4e9b1ef3a34&dnt=0&lmt=0';
+      var ymk_poster = '';
+      var ymk_ratio = "16:9";
+      if (typeof videojs == 'undefined') {
+        return;
+      }
+
+      var player_html = document.getElementById("ymk_player");
+      var player = videojs.getPlayer('ymk_player');
+
+      if (player_html == null) {
+        player_html = '<video-js id="ymk_player" class="video-js" webkit-playsinline playsinline controls x-webkit-airplay="allow" controlslist="nodownload" preload="metadata"></video-js>';
+        if (videojs.browser.IE_VERSION) {
+          player_html = '<video id="ymk_player" class="video-js" webkit-playsinline playsinline controls x-webkit-airplay="allow" controlslist="nodownload" preload="metadata"></video>';
+        }
+
+        var player_container = document.getElementById("ymk_player_container");
+        if (player_container) {
+          player_container.innerHTML = player_html;
+        }
+      }
+      console.info('iframe:', player);
+      if (typeof player === 'undefined') {
+        player = videojs('ymk_player', {
+          liveui: true,
+          errorDisplay: false,
+          aspectRatio: ymk_ratio,
+          playbackRates: [0.75, 1, 1.25, 1.5, 1.75, 2],
+          controlBar: {
+            pictureInPictureToggle: false
+          },
+          poster: ymk_poster,
+          autoplay: 'muted',
+          muted: true,
+        });
+        player.src({
+          type: "application/x-mpegURL",
+          src: ymk_m3u8,
+        });
+      }
+
+      var intersection = new IntersectionObserver(
+        function (entries){
+          if (player) {
+            const [entry] = entries;
+            if (entry.isIntersecting) {
+              if (player.currentTime() > 0) {
+                player.play();
+                console.info('iframe: play');
+              } else {
+                player.autoplay('muted');
+                console.info('iframe:autoplay');
+              }
+            } else {
+              player.pause();
+              console.info('iframe:pause');
+            }
+          }
+        }
+      );
+      intersection.observe(document.querySelector('.player-container'));
+    })();
+  </script>
+</body>
+
+</html>
