@@ -55,6 +55,10 @@
   </div>
   <script type="text/javascript" src="https://vod.brightchat.com/static/assets/js/epochplayer7.js?ver=12"></script>
   <script type="text/javascript">
+    // production
+    // const allowedOrigin = ['https://www.theepochtimes.com', 'https://staging.theepochtimes.com'];
+    // dev
+    const allowedOrigin = ['http://localhost:3000'];
     (function () {
       var ymk_id = "a9c5afaa-3ec4-4f3f-9835-b192abca857b";
       var ymk_player_id = "player-a9c5afaa-3ec4-4f3f-9835-b192abca857b";
@@ -98,6 +102,24 @@
           src: ymk_m3u8,
         });
       }
+
+      if (player) {
+        window.addEventListener('message', function(event) {
+          console.info('event.origin:', event.origin);
+          if (event.origin) {
+            // The data was sent from your site.
+            // Data sent with postMessage is stored in event.data:
+            console.log(event.data);
+
+          } else {
+            // The data was NOT sent from your site!
+            // Be careful! Do not use it. This else branch is
+            // here just for clarity, you usually shouldn't need it.
+            return;
+          }
+        }
+      }
+
     })();
   </script>
 </body>
