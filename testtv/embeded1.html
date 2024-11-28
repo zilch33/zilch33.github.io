@@ -9,18 +9,22 @@
     <div class="test1">value</div>
 </body>
 <script type="text/javascript">
-  window.addEventListener('message', function(event) {
-    console.info('event.origin:', event.origin);
-    console.info('event.data:', event.data);
-    if (event.origin === 'http://127.0.0.1:5501') {
-      // The data was sent from your site.
-      // Data sent with postMessage is stored in event.data:
-      console.log(event.data);
-    } else {
-      // The data was NOT sent from your site!
-      // Be careful! Do not use it. This else branch is
-      // here just for clarity, you usually shouldn't need it.
-      return;
+  window.document.addEventListener('readystatechange', () => {
+    if (window.document.readyState == 'complete') {
+      window.addEventListener('message', function(event) {
+        console.info('event.origin:', event.origin);
+        console.info('event.data:', event.data);
+        if (event.origin === 'http://127.0.0.1:5501') {
+          // The data was sent from your site.
+          // Data sent with postMessage is stored in event.data:
+          console.log(event.data);
+        } else {
+          // The data was NOT sent from your site!
+          // Be careful! Do not use it. This else branch is
+          // here just for clarity, you usually shouldn't need it.
+          return;
+        }
+      });
     }
   });
 </script>
