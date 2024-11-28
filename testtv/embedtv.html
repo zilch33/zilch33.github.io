@@ -79,7 +79,7 @@
           player_container.innerHTML = player_html;
         }
       }
-      console.info('iframe:', player);
+
       if (typeof player === 'undefined') {
         player = videojs('ymk_player', {
           liveui: true,
@@ -98,27 +98,6 @@
           src: ymk_m3u8,
         });
       }
-
-      var intersection = new IntersectionObserver(
-        function (entries){
-          if (player) {
-            const [entry] = entries;
-            if (entry.isIntersecting) {
-              if (player.currentTime() > 0) {
-                player.play();
-                console.info('iframe: play');
-              } else {
-                player.autoplay('muted');
-                console.info('iframe:autoplay');
-              }
-            } else {
-              player.pause();
-              console.info('iframe:pause');
-            }
-          }
-        }
-      );
-      intersection.observe(document.querySelector('.player-container'));
     })();
   </script>
 </body>
