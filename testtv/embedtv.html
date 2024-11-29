@@ -56,20 +56,18 @@
   <script type="text/javascript" src="https://vod.brightchat.com/static/assets/js/epochplayer7.js?ver=12"></script>
   <script type="text/javascript">
     // production
-    // const allowedOrigin = ['https://www.theepochtimes.com', 'https://staging.theepochtimes.com'];
+    // var allowedOrigin = ['https://www.theepochtimes.com', 'https://staging.theepochtimes.com'];
     // dev
-    const allowedOrigin = ['http://localhost:3000'];
+    var allowedOrigin = ['http://localhost:3000'];
     function isOriginAllowed(origin) {
-      let allowed = false;
-      if (origin && typeof origin === 'string') {
-        for (let i=0;i < allowedOrigin.length; i+=1) {
+      if (typeof origin === 'string') {
+        for (let i=0 ; i < allowedOrigin.length; i+=1) {
           if (origin.indexOf(allowedOrigin[i]) > -1) {
-            allowed = true;
-            break;
+            return true;
           }
         }
       }
-      return allowed;
+      return false;
     }
 
     (function () {
@@ -120,11 +118,11 @@
         console.info('event.origin:', event.origin);
         console.log('event.data:', event.data);
         if (isOriginAllowed(event.origin)) {
-          const data = event.data;
-          if(data && data.type) {
-            const dType = data.type;
-            const dPayload = data.payload;
-            if (dType === 'player') {
+          var data = event.data;
+          if(data) {
+            var dtype = data.type;
+            var dpayload = data.payload;
+            if (dtype === 'player') {
               if (!player) return;
 
               if (dPayload === 'play') {
