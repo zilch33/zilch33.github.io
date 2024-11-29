@@ -130,11 +130,14 @@
                     console.info('iframe play');
                     if (player.currentTime() > 0) {
                       player.play();
+                      player.play();
                     } else {
+                      player.autoplay('muted');
                       player.autoplay('muted');
                     }
                   } else if(event.data.payload === 'pause') {
                     console.info('iframe pause');
+                    player.pause();
                     player.pause();
                   }
                 }
