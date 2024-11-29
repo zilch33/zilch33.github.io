@@ -118,35 +118,36 @@
 
       window.addEventListener('message', function(event) {
         console.info('event.origin:', event.origin);
-        if (event.origin) {
-          // The data was sent from your site.
-          // Data sent with postMessage is stored in event.data:
-          console.log(event.data);
-          if (isOriginAllowed) {
-            switch(event.data.type) {
-              case 'player':
-                if (player) {
-                  if(event.data.payload === 'play') {
-                    console.info('iframe play');
-                    if (player.currentTime() > 0) {
+        console.log('event.data:', event.data);
+        if (isOriginAllowed(event.origin)) {
+          const data = event.data;
+          if(data && data.type) {
+            const dType = data.type;
+            const dPayload = data.payload;
+            if (dType === 'player') {
+              if (!player) return;
+
+              if (dPayload === 'play') {
+                console.info('iframe play');
+                if (player.currentTime() > 0) {
+                  if (player.liveTracker && player.liveTracker.seekToLiveEdge) {
+                    console.info('iframe seekToLiveEdge');
+                    try {
                       player.liveTracker.seekToLiveEdge();
-                      player.play();
-                    } else {
-                      player.autoplay('muted');
+                    } catch(e) {
+                      console.error(e);
                     }
-                  } else if(event.data.payload === 'pause') {
-                    console.info('iframe pause');
-                    player.pause();
                   }
+                  player.play();
+                } else {
+                  player.autoplay('muted');
                 }
-                break;
+              } else if (dPayload === 'pause') {
+                console.info('iframe pause');
+                player.pause();
+              }
             }
           }
-        } else {
-          // The data was NOT sent from your site!
-          // Be careful! Do not use it. This else branch is
-          // here just for clarity, you usually shouldn't need it.
-          return;
         }
       });
       console.info('window add message listener');
