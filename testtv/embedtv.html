@@ -119,10 +119,10 @@
         console.log('event.data:', event.data);
         if (isOriginAllowed(event.origin)) {
           var data = event.data;
-          if(data) {
-            var dtype = data.type;
-            var dpayload = data.payload;
-            if (dtype === 'player') {
+          if (data) {
+            var dType = data.type;
+            var dPayload = data.payload;
+            if (dType === 'player') {
               if (!player) return;
 
               if (dPayload === 'play') {
