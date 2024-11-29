@@ -115,8 +115,6 @@
       }
 
       window.addEventListener('message', function(event) {
-        console.info('event.origin:', event.origin);
-        console.log('event.data:', event.data);
         if (isOriginAllowed(event.origin)) {
           var data = event.data;
           if (data) {
@@ -126,10 +124,8 @@
               if (!player) return;
 
               if (dPayload === 'play') {
-                console.info('iframe play');
                 if (player.currentTime() > 0) {
                   if (player.liveTracker && player.liveTracker.seekToLiveEdge) {
-                    console.info('iframe seekToLiveEdge');
                     try {
                       player.liveTracker.seekToLiveEdge();
                     } catch(e) {
@@ -141,7 +137,6 @@
                   player.autoplay('muted');
                 }
               } else if (dPayload === 'pause') {
-                console.info('iframe pause');
                 player.pause();
               }
             }
