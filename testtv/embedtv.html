@@ -117,6 +117,7 @@
       window.addEventListener('message', function(event) {
         console.info('event.origin:', event.origin);
         console.log('event.data:', event.data);
+        alert('event.data:', event.data);
         if (isOriginAllowed(event.origin)) {
           var data = event.data;
           if (data) {
