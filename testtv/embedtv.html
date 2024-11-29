@@ -58,7 +58,7 @@
     // production
     // var allowedOrigin = ['https://www.theepochtimes.com', 'https://staging.theepochtimes.com'];
     // dev
-    var allowedOrigin = ['http://localhost:3000'];
+    var allowedOrigin = ['http://localhost:3000', 'http://192.168.1.121:3000'];
     function isOriginAllowed(origin) {
       if (typeof origin === 'string') {
         for (let i=0 ; i < allowedOrigin.length; i+=1) {
