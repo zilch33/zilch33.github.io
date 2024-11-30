@@ -133,8 +133,10 @@
                       console.error(e);
                     }
                   }
+                  player.autoplay('muted');
                   try {
                     player.play();
+                    console.info('iframe play');
                   } catch (e) {
                     console.info('iframe error:', e);
                     if(e.name === 'NotAllowedError') {
@@ -148,6 +150,8 @@
               } else if (dPayload === 'pause') {
                 //player.pause();
                 player.muted(true);
+                player.autoplay('muted');
+                console.info('iframe pause muted');
               }
             }
           }
