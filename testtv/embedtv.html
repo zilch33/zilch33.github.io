@@ -133,12 +133,17 @@
                       console.error(e);
                     }
                   }
-                  player.play();
+                  try {
+                    player.muted(false);
+                  } catch (e) {
+                    console.info('iframe error:', e);
+                  }
                 } else {
                   player.autoplay('muted');
                 }
               } else if (dPayload === 'pause') {
-                player.pause();
+                //player.pause();
+                player.muted(true);
               }
             }
           }
