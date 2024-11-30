@@ -134,9 +134,13 @@
                     }
                   }
                   try {
-                    player.muted(false);
+                    player.play();
                   } catch (e) {
                     console.info('iframe error:', e);
+                    if(e.name === 'NotAllowedError') {
+                      player.muted(true);
+                      player.play();
+                    }
                   }
                 } else {
                   player.autoplay('muted');
