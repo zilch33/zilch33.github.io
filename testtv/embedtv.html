@@ -55,9 +55,9 @@
   </div>
   <script type="text/javascript" src="https://vod.brightchat.com/static/assets/js/epochplayer7.js?ver=12"></script>
   <script type="text/javascript">
-    // production
+    /** production */
     // var allowedOrigin = ['https://www.theepochtimes.com', 'https://staging.theepochtimes.com'];
-    // dev
+    /** dev */
     var allowedOrigin = ['http://localhost:3000', 'http://192.168.1.121:3000'];
     function isOriginAllowed(origin) {
       if (typeof origin === 'string') {
@@ -115,6 +115,7 @@
       }
 
       window.addEventListener('message', function(event) {
+        console.info('event.origin:', event.origin);
         if (isOriginAllowed(event.origin)) {
           var data = event.data;
           if (data) {
@@ -143,7 +144,7 @@
           }
         }
       });
-      console.info('window add message listener');
+      console.info('##iframe message listener added');
     })();
   </script>
 </body>
