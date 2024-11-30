@@ -133,30 +133,25 @@
                       console.error(e);
                     }
                   }
+                  player.autoplay('muted');
                   try {
                     player.play();
                     console.info('iframe play');
                   } catch (e) {
-                    console.error(e);
+                    console.info('iframe error:', e);
                     if(e.name === 'NotAllowedError') {
-                      console.info('iframe NotAllowedError');
-                      try {
-                        player.muted(true);
-                      } catch (e) {
-                        console.error(e);
-                      }
-                      try {
-                        player.play();
-                      } catch (e) {
-                        console.error(e);
-                      }
+                      player.muted(true);
+                      player.play();
                     }
                   }
                 } else {
                   player.autoplay('muted');
                 }
               } else if (dPayload === 'pause') {
-                player.pause();
+                //player.pause();
+                player.muted(true);
+                player.autoplay('muted');
+                console.info('iframe pause muted');
               }
             }
           }
