@@ -137,14 +137,9 @@
                   var playPromise = player.play();
                   if(playPromise) {
                     playPromise.then(function(value) {
-                        console.info('iframe play promise return value:', value);
                     }).catch(function(e) {
-                        console.error('iframe error:', e);
-                        console.info('e.name:', e.name);
-                        console.info('e.message:', e.message);
-                        console.info('e.constructor === "NotAllowedError":', e.constructor === 'NotAllowedError');
+                        console.error('Error while call play():', e);
                         if(e.name === 'NotAllowedError') {
-                          console.info('iframe NotAllowedError');
                           try {
                             player.muted(true);
                           } catch (e) {
