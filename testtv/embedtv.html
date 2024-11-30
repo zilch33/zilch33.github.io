@@ -138,6 +138,10 @@
                     console.info('iframe play');
                   } catch (e) {
                     console.error(e);
+                    console.info('e.name:', e.name);
+                    console.info('e.type:', e.type);
+                    console.info('e.message:', e.message);
+                    console.info('e.constructor === "NotAllowedError":', e.constructor === 'NotAllowedError');
                     if(e.name === 'NotAllowedError') {
                       console.info('iframe NotAllowedError');
                       try {
