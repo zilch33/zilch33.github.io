@@ -61,7 +61,7 @@
     var allowedOrigin = ['http://localhost:3000', 'http://192.168.1.121:3000'];
     function isOriginAllowed(origin) {
       if (typeof origin === 'string') {
-        for (let i=0 ; i < allowedOrigin.length; i+=1) {
+        for (var i=0 ; i < allowedOrigin.length; i+=1) {
           if (origin.indexOf(allowedOrigin[i]) > -1) {
             return true;
           }
@@ -133,28 +133,27 @@
                       console.error(e);
                     }
                   }
-                  try {
-                    player.play();
-                    console.info('iframe play');
-                  } catch (e) {
-                    console.error('iframe error:', e);
-                    console.info('e.name:', e.name);
-                    console.info('e.type:', e.type);
-                    console.info('e.message:', e.message);
-                    console.info('e.constructor === "NotAllowedError":', e.constructor === 'NotAllowedError');
-                    if(e.name === 'NotAllowedError') {
-                      console.info('iframe NotAllowedError');
-                      try {
-                        player.muted(true);
-                      } catch (e) {
-                        console.error(e);
-                      }
-                      try {
-                        player.play();
-                      } catch (e) {
-                        console.error(e);
-                      }
-                    }
+
+                  var playPromise = player.play();
+                  if(playPromise) {
+                    playPromise.then(function(value) {
+                        console.info('iframe play promise return value');
+                    }).catch(function(e) {
+                        console.error('iframe error:', e);
+                        console.info('e.name:', e.name);
+                        console.info('e.type:', e.type);
+                        console.info('e.message:', e.message);
+                        console.info('e.constructor === "NotAllowedError":', e.constructor === 'NotAllowedError');
+                        if(e.name === 'NotAllowedError') {
+                          console.info('iframe NotAllowedError');
+                          try {
+                            player.muted(true);
+                          } catch (e) {
+                            console.error(e);
+                          }
+                          player.play();
+                        }
+                    });
                   }
                 } else {
                   player.autoplay('muted');
