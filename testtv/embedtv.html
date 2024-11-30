@@ -137,11 +137,10 @@
                   var playPromise = player.play();
                   if(playPromise) {
                     playPromise.then(function(value) {
-                        console.info('iframe play promise return value');
+                        console.info('iframe play promise return value:', value);
                     }).catch(function(e) {
                         console.error('iframe error:', e);
                         console.info('e.name:', e.name);
-                        console.info('e.type:', e.type);
                         console.info('e.message:', e.message);
                         console.info('e.constructor === "NotAllowedError":', e.constructor === 'NotAllowedError');
                         if(e.name === 'NotAllowedError') {
