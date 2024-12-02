@@ -126,6 +126,14 @@
 
               if (dPayload === 'play') {
                 if (player.currentTime() > 0) {
+                  if (player.liveTracker && player.liveTracker.seekToLiveEdge) {
+                    try {
+                      player.liveTracker.seekToLiveEdge();
+                    } catch (e) {
+                      console.error(e);
+                    }
+                  }
+
                   var playPromise = player.play();
                   if (playPromise) {
                     playPromise.then(function (value) {
@@ -141,13 +149,6 @@
                         player.play();
                       }
                     });
-                  }
-                  if (player.liveTracker && player.liveTracker.seekToLiveEdge) {
-                    try {
-                      player.liveTracker.seekToLiveEdge();
-                    } catch (e) {
-                      console.error(e);
-                    }
                   }
                 } else {
                   player.autoplay('muted');
