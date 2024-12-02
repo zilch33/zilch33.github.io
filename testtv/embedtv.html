@@ -61,7 +61,7 @@
     var allowedOrigin = ['http://localhost:3000', 'http://192.168.1.121:3000'];
     function isOriginAllowed(origin) {
       if (typeof origin === 'string') {
-        for (var i=0 ; i < allowedOrigin.length; i+=1) {
+        for (var i = 0; i < allowedOrigin.length; i += 1) {
           if (origin.indexOf(allowedOrigin[i]) > -1) {
             return true;
           }
@@ -114,7 +114,7 @@
         });
       }
 
-      window.addEventListener('message', function(event) {
+      window.addEventListener('message', function (event) {
         console.info('event.origin:', event.origin);
         if (isOriginAllowed(event.origin)) {
           var data = event.data;
@@ -129,24 +129,24 @@
                   if (player.liveTracker && player.liveTracker.seekToLiveEdge) {
                     try {
                       player.liveTracker.seekToLiveEdge();
-                    } catch(e) {
+                    } catch (e) {
                       console.error(e);
                     }
                   }
 
                   var playPromise = player.play();
-                  if(playPromise) {
-                    playPromise.then(function(value) {
-                    }).catch(function(e) {
-                        console.error('Error while call play():', e);
-                        if(e.name === 'NotAllowedError') {
-                          try {
-                            player.muted(true);
-                          } catch (e) {
-                            console.error(e);
-                          }
-                          player.play();
+                  if (playPromise) {
+                    playPromise.then(function (value) {
+                    }).catch(function (e) {
+                      console.error('Error while call play():', e);
+                      if (e.name === 'NotAllowedError') {
+                        try {
+                          player.muted(true);
+                        } catch (e) {
+                          console.error(e);
                         }
+                        player.play();
+                      }
                     });
                   }
                 } else {
@@ -160,14 +160,28 @@
         }
       });
 
-      window.addEventListener('pageshow', function(event) {
+      window.addEventListener('pageshow', function (event) {
         console.info('iframe pageshow');
         console.info('event.persisted:', event.persisted);
-        /*
         if (event.persisted) {
-          window.location.reload() 
+          if (player) {
+            var playPromise = player.play();
+            if (playPromise) {
+              playPromise.then(function (value) {
+              }).catch(function (e) {
+                console.error('Error while call play():', e);
+                if (e.name === 'NotAllowedError') {
+                  try {
+                    player.muted(true);
+                  } catch (e) {
+                    console.error(e);
+                  }
+                  player.play();
+                }
+              });
+            }
+          }
         }
-        */
       });
     })();
   </script>
