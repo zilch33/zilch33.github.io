@@ -138,7 +138,7 @@
                   if (playPromise) {
                     playPromise.then(function (value) {
                     }).catch(function (e) {
-                      console.error('Error while call play():', e);
+                      console.error('Error while calling play():', e);
                       if (e.name === 'NotAllowedError') {
                         try {
                           player.muted(true);
@@ -165,20 +165,24 @@
         console.info('iframe pageshow event.persisted:', event.persisted);
         if (event.persisted) {
           if (player) {
+            try {
+              player.muted(true);
+            } catch (e) {
+              console.error(e);
+            }
+            if (player.liveTracker && player.liveTracker.seekToLiveEdge) {
+              try {
+                player.liveTracker.seekToLiveEdge();
+              } catch (e) {
+                console.error(e);
+              }
+            }
             var playPromise = player.play();
             console.info('iframe pageshow event.persisted true, play');
             if (playPromise) {
               playPromise.then(function (value) {
               }).catch(function (e) {
-                console.error('Error while call play():', e);
-                if (e.name === 'NotAllowedError') {
-                  try {
-                    player.muted(true);
-                  } catch (e) {
-                    console.error(e);
-                  }
-                  player.play();
-                }
+                console.error('Error while calling play():', e);
               });
             }
           }
