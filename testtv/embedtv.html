@@ -139,7 +139,7 @@
                     playPromise.then(function (value) {
                       //console.info('play() success');
                     }).catch(function (e) {
-                      console.error('Error while play():', e);
+                      console.error('Error while play(), ', e);
                       if (e.name === 'NotAllowedError') {
                         try {
                           player.muted(true);
