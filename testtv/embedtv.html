@@ -159,7 +159,16 @@
           }
         }
       });
-      console.info('##iframe message listener added');
+
+      window.addEventListener('pageshow', function(event) {
+        console.info('iframe pageshow');
+        console.info('event.persisted:', event.persisted);
+        /*
+        if (event.persisted) {
+          window.location.reload() 
+        }
+        */
+      });
     })();
   </script>
 </body>
