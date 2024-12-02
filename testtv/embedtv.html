@@ -137,8 +137,9 @@
                   var playPromise = player.play();
                   if (playPromise) {
                     playPromise.then(function (value) {
+                      //console.info('play() success');
                     }).catch(function (e) {
-                      console.error('Error while calling play():', e);
+                      console.error('Error while play():', e);
                       if (e.name === 'NotAllowedError') {
                         try {
                           player.muted(true);
@@ -159,6 +160,7 @@
           }
         }
       });
+      console.info('message listener added');
     })();
   </script>
 </body>
