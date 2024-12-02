@@ -162,10 +162,11 @@
 
       window.addEventListener('pageshow', function (event) {
         console.info('iframe pageshow');
-        console.info('event.persisted:', event.persisted);
+        console.info('iframe pageshow event.persisted:', event.persisted);
         if (event.persisted) {
           if (player) {
             var playPromise = player.play();
+            console.info('iframe pageshow event.persisted true, play');
             if (playPromise) {
               playPromise.then(function (value) {
               }).catch(function (e) {
